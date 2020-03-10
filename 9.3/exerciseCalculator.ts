@@ -53,5 +53,17 @@ function exerciseCaltulator(dailyExerciseHours: number[], targetAmount: number):
 
 }
 
-console.log(exerciseCaltulator([1, 2, 3, 0, 0, 0], 5))
-console.log(exerciseCaltulator([7, 5, 5, 0, 0, 0, 0], 19))
+if (process.argv.length <= 3) throw new Error("Too few arguments")
+
+const days: number[] = []
+let goal: number = 0
+for (let index = 2; index < process.argv.length - 1; index++) {
+    const element = process.argv[index];
+    if (isNaN(Number(element))) throw new Error("Exercisedays array must contain only numbers")
+    days.push(Number(element))
+}
+goal = Number(process.argv[process.argv.length - 1])
+if (isNaN(goal)) throw new Error("Your goal must be a number (last param)")
+
+
+console.log(exerciseCaltulator(days, goal))
