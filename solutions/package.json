@@ -5,13 +5,20 @@
   "main": "index.js",
   "scripts": {
     "weight": "ts-node bmiCalculator.ts",
-    "exercises": "ts-node exerciseCalculator.ts"
+    "exercises": "ts-node exerciseCalculator.ts",
+    "start": "ts-node index.ts",
+    "dev": "ts-node-dev index.ts"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/express": "^4.17.6",
     "@types/node": "^13.9.0",
     "ts-node": "^8.6.2",
+    "ts-node-dev": "^1.0.0-pre.50",
     "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }
