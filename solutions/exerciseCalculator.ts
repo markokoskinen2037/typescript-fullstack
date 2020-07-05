@@ -48,17 +48,18 @@ function exerciseCaltulator(dailyExerciseHours: number[], targetAmount: number):
     trainingDays,
   };
 }
+export = exerciseCaltulator;
 
-if (process.argv.length <= 3) throw new Error('Too few arguments');
+// if (process.argv.length <= 3) throw new Error('Too few arguments');
 
-const days: number[] = [];
-let goal = 0;
-for (let index = 2; index < process.argv.length - 1; index++) {
-  const element = process.argv[index];
-  if (isNaN(Number(element))) throw new Error('Exercisedays array must contain only numbers');
-  days.push(Number(element));
-}
-goal = Number(process.argv[process.argv.length - 1]);
-if (isNaN(goal)) throw new Error('Your goal must be a number (last param)');
+// const days: number[] = [];
+// let goal = 0;
+// for (let index = 2; index < process.argv.length - 1; index++) {
+//   const element = process.argv[index];
+//   if (isNaN(Number(element))) throw new Error('Exercisedays array must contain only numbers');
+//   days.push(Number(element));
+// }
+// goal = Number(process.argv[process.argv.length - 1]);
+// if (isNaN(goal)) throw new Error('Your goal must be a number (last param)');
 
-console.log(exerciseCaltulator(days, goal));
+// console.log(exerciseCaltulator(days, goal));
