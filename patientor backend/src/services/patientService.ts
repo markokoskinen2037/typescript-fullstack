@@ -9,13 +9,14 @@ const acualData: Array<Patient> = jsonData.map(obj => {
 });
 
 const getAll = (): Omit<Patient,"ssn">[] => {
-  return acualData.map(({id,name,dateOfBirth,gender,occupation}) => (
+  return acualData.map(({id,name,dateOfBirth,gender,occupation, entries}) => (
     {
       id,
       name,
       dateOfBirth,
       gender,
-      occupation
+      occupation,
+      entries
     }
   ));
 };
@@ -28,7 +29,13 @@ const add = (patient:NewPatientEntry):Patient => {
   return acualData[acualData.length-1];
 };
 
+const getOne = (id:string):Patient|undefined => {
+  const result = acualData.find(p => p.id === id);
+  return result;
+};
+
 export default {
   getAll,
   add,
+  getOne
 };
