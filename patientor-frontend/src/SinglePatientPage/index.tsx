@@ -101,7 +101,7 @@ const SinglePatientPage: React.FC = () => {
       }
     };
     if(!patients[id]?.ssn) fetchSinglePatient();
-  }, [dispatch,id]);
+  }, [dispatch,id,patients]);
 
   const patient = patients[id]; 
 
