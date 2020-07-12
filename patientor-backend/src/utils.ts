@@ -1,4 +1,4 @@
-import { NewPatientEntry, Gender } from './types';
+import { NewPatientEntry, Gender, EntryType } from './types';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -49,6 +49,25 @@ const parseOccupation = (occupation:any) : string => {
   return occupation;
 };
 
+const isEntryType = (param: any): param is EntryType => {
+  return Object.values(EntryType).includes(param);
+};
+
+const parseEntryType = (entry:any) : EntryType => {
+  if(!entry || !isEntryType(entry.type)){
+    console.log(entry)
+    throw new Error("Invalid entryType" + String(entry));
+  }
+  return entry;
+};
+
+const parseEntries = (entries:any) => {
+  if(!entries || entries.length === 0 ||!entries.length) return []
+
+  return entries.map((e:any) => parseEntryType(e))
+
+}
+
   /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 const toNewPatientEntry = (object : any): NewPatientEntry => {
 
@@ -59,7 +78,7 @@ const toNewPatientEntry = (object : any): NewPatientEntry => {
     dateOfBirth: parseDate(object.dateOfBirth),
     gender: parseGender(object.gender),
     occupation: parseOccupation(object.occupation),
-    entries: []
+    entries: parseEntries(object.entries)
   };
   
   return newEntry;
