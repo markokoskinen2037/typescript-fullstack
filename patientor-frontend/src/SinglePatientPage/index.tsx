@@ -10,9 +10,8 @@ import { useParams } from "react-router-dom";
 const SinglePatientPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
 
-  const [{ patients }, dispatch] = useStateValue();
+  const [{ patients, diagnoses }, dispatch] = useStateValue();
   React.useEffect(() => {
-
     const fetchSinglePatient = async () => {
       try {
         const { data: patientFromApi } = await axios.get<Patient>(
@@ -23,7 +22,7 @@ const SinglePatientPage: React.FC = () => {
         console.error(e);
       }
     };
-    fetchSinglePatient();
+    if(!patients[id]?.ssn) fetchSinglePatient();
   }, [dispatch,id]);
 
   const patient = patients[id] 
@@ -45,6 +44,14 @@ const SinglePatientPage: React.FC = () => {
 
   const iconName = getIconName()
 
+  const getDiagnosisName = (code:string) => {
+    const temp = diagnoses.find(d => {
+      return d.code === code
+    })
+
+    return temp?.name
+  }
+
   return (
     <div className="singlePatient">
       <Header as="h2">{patient.name} <Icon name={iconName}/> </Header>
@@ -57,7 +64,7 @@ const SinglePatientPage: React.FC = () => {
           <div>{entry.date} {entry.description}</div>
           <ul>
           {entry.diagnosisCodes?.map((code) => (
-            <li key={code}>{code}</li>
+            <li key={code}>{code} - {getDiagnosisName(code)}</li>
           ))}
           </ul>
         </div>
