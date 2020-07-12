@@ -4,7 +4,7 @@ import { Header, Icon, SemanticICONS } from "semantic-ui-react";
 
 import { Patient, Gender } from "../types";
 import { apiBaseUrl } from "../constants";
-import { useStateValue } from "../state";
+import { useStateValue, updatePatientListAction } from "../state";
 import { useParams } from "react-router-dom";
 
 const SinglePatientPage: React.FC = () => {
@@ -18,7 +18,7 @@ const SinglePatientPage: React.FC = () => {
         const { data: patientFromApi } = await axios.get<Patient>(
           `${apiBaseUrl}/patients/${id}`
         );
-        dispatch({ type: "UPDATE_PATIENT_LIST", payload: patientFromApi });
+        dispatch(updatePatientListAction(patientFromApi));
       } catch (e) {
         console.error(e);
       }
