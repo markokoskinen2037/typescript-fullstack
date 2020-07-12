@@ -55,7 +55,6 @@ const isEntryType = (param: any): param is EntryType => {
 
 const parseEntryType = (entry:any) : EntryType => {
   if(!entry || !isEntryType(entry.type)){
-    console.log(entry)
     throw new Error("Invalid entryType" + String(entry));
   }
   return entry;

@@ -37,9 +37,6 @@ const getHpColor = (val: number) => {
 
   switch (entry.type) {
     case "HealthCheck":
-
-
-    console.log(entry.healthCheckRating);
       
       return (
         <Segment key={entry.id}>
