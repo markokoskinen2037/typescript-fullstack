@@ -24,7 +24,7 @@ const SinglePatientPage: React.FC = () => {
       }
     };
     fetchSinglePatient();
-  }, [dispatch]);
+  }, [dispatch,id]);
 
   const patient = patients[id] 
 
@@ -50,6 +50,19 @@ const SinglePatientPage: React.FC = () => {
       <Header as="h2">{patient.name} <Icon name={iconName}/> </Header>
       <div>SSN: {patient.ssn}</div>
       <div>occupation: {patient.occupation}</div>
+      {!!patient.entries.length && <h2>entries</h2>}
+      {patient.entries.map(entry => {
+        return (
+          <div key={entry.id}>
+          <div>{entry.date} {entry.description}</div>
+          <ul>
+          {entry.diagnosisCodes?.map((code) => (
+            <li key={code}>{code}</li>
+          ))}
+          </ul>
+        </div>
+      )
+      })}
     </div>
   );
 };
