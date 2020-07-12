@@ -7,39 +7,39 @@ import { apiBaseUrl } from "../constants";
 import { useStateValue, updatePatientListAction } from "../state";
 import { useParams } from "react-router-dom";
 
-const EntryDetails: React.FC<{entry:Entry, diagnoses:Diagnosis[]}> = ({entry, diagnoses}) => {
+const EntryDetails: React.FC<{entry: Entry; diagnoses: Diagnosis[]}> = ({entry, diagnoses}) => {
 
     
-  const getDiagnosisName = (code:string) => {
+  const getDiagnosisName = (code: string) => {
     const temp = diagnoses.find(d => {
-      return d.code === code
-    })
+      return d.code === code;
+    });
 
-    return temp?.name
-  }
+    return temp?.name;
+  };
 
-const getHpColor = (val:number) => {
+const getHpColor = (val: number) => {
   switch (val) {
     case 0:
-      return "green"
+      return "green";
     case 1:
-      return "yellow"
+      return "yellow";
     case 2:
-      return "red"
+      return "red";
     case 3:
-      return "black"
+      return "black";
         
     default:
       break;
   }
-}
+};
  
 
   switch (entry.type) {
     case "HealthCheck":
 
 
-    console.log(entry.healthCheckRating)
+    console.log(entry.healthCheckRating);
       
       return (
         <Segment key={entry.id}>
@@ -53,7 +53,7 @@ const getHpColor = (val:number) => {
           <br/>
           <Icon name="heart" color={getHpColor(entry.healthCheckRating)} />
         </Segment>
-      )
+      );
     case "Hospital":
       return (
         <Segment key={entry.id}>
@@ -63,7 +63,7 @@ const getHpColor = (val:number) => {
             <li key={code}>{code} - {getDiagnosisName(code)}</li>
           ))}
         </Segment>
-      )
+      );
     case "OccupationalHealthcare":
       return (
         <Segment key={entry.id}>
@@ -76,13 +76,13 @@ const getHpColor = (val:number) => {
             Sick leave from {entry.sickLeave.startDate} till {entry.sickLeave.endDate}
             </div>}
         </Segment>
-      )
+      );
     default:
-      return assertNever(entry)
+      return assertNever(entry);
   }
 
 
-}
+};
 
 
 const SinglePatientPage: React.FC = () => {
@@ -103,24 +103,24 @@ const SinglePatientPage: React.FC = () => {
     if(!patients[id]?.ssn) fetchSinglePatient();
   }, [dispatch,id]);
 
-  const patient = patients[id] 
+  const patient = patients[id]; 
 
-  if(!patient) return null
+  if(!patient) return null;
 
   const getIconName = (): SemanticICONS => {
     switch (patient.gender) {
       case Gender.Female:
-        return "female"
+        return "female";
       case Gender.Male:
-        return "male"
+        return "male";
       case Gender.Other:
-        return "question"
+        return "question";
       default:
-        return "question"
+        return "question";
     }
-  }
+  };
 
-  const iconName = getIconName()
+  const iconName = getIconName();
 
 
 

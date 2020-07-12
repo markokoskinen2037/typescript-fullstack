@@ -36,7 +36,7 @@ const App: React.FC = () => {
         console.error(e);
       }
     };
-    fetchDiagnosis()
+    fetchDiagnosis();
     fetchPatientList();
   }, [dispatch]);
 
