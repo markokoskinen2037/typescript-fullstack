@@ -48,28 +48,23 @@ function isNewNewOccupationalHealthcareEntry(entry: NewEntry): entry is NewOccup
   return (entry as NewOccupationalHealthcareEntry).employerName !== undefined;
 }
 
-const addEntry = (id:string,newEntry:any):Patient|undefined => {
+const addEntry = (id:string,newEntry:NewEntry):Patient|undefined => {
 
   const targetPatient = acualData.find(patient => patient.id === id);
 
   if(!targetPatient) return undefined;
 
-  const requiredPropertyMissing = ["description", "date", "specialist", "type"].map(key => !!newEntry[key]).includes(false);
-  const hasValidType = Object.values(EntryType).includes(newEntry.type);
-
-  if (requiredPropertyMissing) {
+  if(!newEntry.description || !newEntry.date || !newEntry.specialist || ! newEntry.type){
     throw new Error("requiredPropertyMissing");
   }
 
-  if(!hasValidType){
+  if (!(newEntry.type in EntryType)){
     throw new Error("invalidType");
   }
 
-  const temp = newEntry as NewEntry;
-
-  switch (temp.type) {
+  switch (newEntry.type) {
     case "HealthCheck":
-      if (!isHealthCheckEntry(temp)) {
+      if (!isHealthCheckEntry(newEntry)) {
         throw new Error("missingEntrySpecificProperties");
       } else {
         acualData = acualData.map(e => {
@@ -77,7 +72,7 @@ const addEntry = (id:string,newEntry:any):Patient|undefined => {
           return {
             ...e,
             entries: e.entries.concat({
-              ...temp,
+              ...newEntry,
               id: (Math.random() * 100).toString(),
             })
           };
@@ -85,7 +80,7 @@ const addEntry = (id:string,newEntry:any):Patient|undefined => {
       }
       break;
     case "Hospital":
-      if (!isNewHospitalEntry(temp)) {
+      if (!isNewHospitalEntry(newEntry)) {
         throw new Error("missingEntrySpecificProperties");
       } else {
         acualData = acualData.map(e => {
@@ -93,7 +88,7 @@ const addEntry = (id:string,newEntry:any):Patient|undefined => {
           return {
             ...e,
             entries: e.entries.concat({
-              ...temp,
+              ...newEntry,
               id: (Math.random() * 100).toString(),
             })
           };
@@ -101,12 +96,12 @@ const addEntry = (id:string,newEntry:any):Patient|undefined => {
       } 
       break;
     case "OccupationalHealthcare":
-      if (!isNewNewOccupationalHealthcareEntry(temp)) {
+      if (!isNewNewOccupationalHealthcareEntry(newEntry)) {
         throw new Error("missingEntrySpecificProperties");
       } else {
 
-        if (temp.sickLeave && (!temp.sickLeave.endDate || !temp.sickLeave.startDate)){
-          delete temp.sickLeave;
+        if (newEntry.sickLeave && (!newEntry.sickLeave.endDate || !newEntry.sickLeave.startDate)){
+          delete newEntry.sickLeave;
         }
 
         acualData = acualData.map(e => {
@@ -114,7 +109,7 @@ const addEntry = (id:string,newEntry:any):Patient|undefined => {
           return {
             ...e,
             entries: e.entries.concat({
-              ...temp,
+              ...newEntry,
               id: (Math.random() * 100).toString(),
             })
           };
