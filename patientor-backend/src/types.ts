@@ -47,9 +47,9 @@ export interface HospitalEntry extends BaseEntry {
   }
 }
 
-export type NewHealthCheckEntry = Omit<HealthCheckEntry,"id">
-export type NewHospitalEntry = Omit<HospitalEntry, "id">
-export type NewOccupationalHealthcareEntry = Omit<OccupationalHealthcareEntry, "id">
+export type NewHealthCheckEntry = Omit<HealthCheckEntry,"id">;
+export type NewHospitalEntry = Omit<HospitalEntry, "id">;
+export type NewOccupationalHealthcareEntry = Omit<OccupationalHealthcareEntry, "id">;
 
 
 export type Entry =

@@ -18,13 +18,13 @@ router.post("/", (req,res) => {
 });
 
 router.post("/:id/entries", (req,res) => {
-  const id = req.params.id
+  const id = req.params.id;
   try{
-    const result = patientService.addEntry(id,req.body)
-    return res.status(200).json(result)
+    const result = patientService.addEntry(id,req.body);
+    return res.status(200).json(result);
   } catch (e){
-    return res.status(400).json(e)
+    return res.status(400).json(e);
   }
-})
+});
 
 export default router;

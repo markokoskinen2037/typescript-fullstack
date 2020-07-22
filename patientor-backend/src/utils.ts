@@ -61,11 +61,11 @@ const parseEntryType = (entry:any) : EntryType => {
 };
 
 const parseEntries = (entries:any) => {
-  if(!entries || entries.length === 0 ||!entries.length) return []
+  if(!entries || entries.length === 0 ||!entries.length) return [];
 
-  return entries.map((e:any) => parseEntryType(e))
+  return entries.map((e:any) => parseEntryType(e));
 
-}
+};
 
   /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 export const toNewPatientEntry = (object : any): NewPatientEntry => {

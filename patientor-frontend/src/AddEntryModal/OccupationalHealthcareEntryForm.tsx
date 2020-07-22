@@ -6,7 +6,7 @@ import { NewOccupationalHealthcareEntry } from "../types";
 import { useStateValue } from "../state";
 import { validateRequired, validateDate, validateDateNotRequired } from "./helpers";
 
-export type EntryFormValues = NewOccupationalHealthcareEntry
+export type EntryFormValues = NewOccupationalHealthcareEntry;
 
 interface Props {
   onSubmit: (values: EntryFormValues) => void;
@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const OccupationalHealthcareEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
-  const [{ diagnoses }] = useStateValue()
+  const [{ diagnoses }] = useStateValue();
 
   return (
     <Formik

@@ -39,9 +39,9 @@ function isHealthCheckEntry(entry: NewEntry): entry is NewHealthCheckEntry {
 }
 
 function isNewHospitalEntry(entry: NewEntry): entry is NewHospitalEntry {
-  const temp = entry as NewHospitalEntry
-  if (!temp.discharge || !temp.discharge.date || !temp.discharge.criteria) return false
-  return true
+  const temp = entry as NewHospitalEntry;
+  if (!temp.discharge || !temp.discharge.date || !temp.discharge.criteria) return false;
+  return true;
 }
 
 function isNewNewOccupationalHealthcareEntry(entry: NewEntry): entry is NewOccupationalHealthcareEntry {
@@ -50,83 +50,83 @@ function isNewNewOccupationalHealthcareEntry(entry: NewEntry): entry is NewOccup
 
 const addEntry = (id:string,newEntry:any):Patient|undefined => {
 
-  const targetPatient = acualData.find(patient => patient.id === id)
+  const targetPatient = acualData.find(patient => patient.id === id);
 
-  if(!targetPatient) return undefined
+  if(!targetPatient) return undefined;
 
-  const requiredPropertyMissing = ["description", "date", "specialist", "type"].map(key => !!newEntry[key]).includes(false)
+  const requiredPropertyMissing = ["description", "date", "specialist", "type"].map(key => !!newEntry[key]).includes(false);
   const hasValidType = Object.values(EntryType).includes(newEntry.type);
 
   if (requiredPropertyMissing) {
-    throw new Error("requiredPropertyMissing")
+    throw new Error("requiredPropertyMissing");
   }
 
   if(!hasValidType){
-    throw new Error("invalidType")
+    throw new Error("invalidType");
   }
 
-  const temp = newEntry as NewEntry
+  const temp = newEntry as NewEntry;
 
   switch (temp.type) {
     case "HealthCheck":
       if (!isHealthCheckEntry(temp)) {
-        throw new Error("missingEntrySpecificProperties")
+        throw new Error("missingEntrySpecificProperties");
       } else {
         acualData = acualData.map(e => {
-          if(e.id !== id) return e
+          if(e.id !== id) return e;
           return {
             ...e,
             entries: e.entries.concat({
               ...temp,
               id: (Math.random() * 100).toString(),
             })
-          }
-        })
+          };
+        });
       }
       break;
     case "Hospital":
       if (!isNewHospitalEntry(temp)) {
-        throw new Error("missingEntrySpecificProperties")
+        throw new Error("missingEntrySpecificProperties");
       } else {
         acualData = acualData.map(e => {
-          if (e.id !== id) return e
+          if (e.id !== id) return e;
           return {
             ...e,
             entries: e.entries.concat({
               ...temp,
               id: (Math.random() * 100).toString(),
             })
-          }
-        })
+          };
+        });
       } 
       break;
     case "OccupationalHealthcare":
       if (!isNewNewOccupationalHealthcareEntry(temp)) {
-        throw new Error("missingEntrySpecificProperties")
+        throw new Error("missingEntrySpecificProperties");
       } else {
 
         if (temp.sickLeave && (!temp.sickLeave.endDate || !temp.sickLeave.startDate)){
-          delete temp.sickLeave
+          delete temp.sickLeave;
         }
 
         acualData = acualData.map(e => {
-          if (e.id !== id) return e
+          if (e.id !== id) return e;
           return {
             ...e,
             entries: e.entries.concat({
               ...temp,
               id: (Math.random() * 100).toString(),
             })
-          }
-        })
+          };
+        });
       }
       break;
     default:
       break;
   }
 
-  return acualData.find(e => e.id === id)
-}
+  return acualData.find(e => e.id === id);
+};
 
 export default {
   getAll,

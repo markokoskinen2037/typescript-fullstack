@@ -15,19 +15,19 @@ interface Props {
 const options = [
   { key: "NewHealthCheckEntry", value: "NewHealthCheckEntry",text:"Healt Check"},
   {key: "NewHospitalEntry", value: "NewHospitalEntry", text:"Hospital"},
-  { key: "NewOccupationalHealthcareEntry", value:"NewOccupationalHealthcareEntry", text:"Occupational Healthcare"}]
+  { key: "NewOccupationalHealthcareEntry", value:"NewOccupationalHealthcareEntry", text:"Occupational Healthcare"}];
 
 const AddEntryModal = ({ modalOpen, onClose, onSubmit, error }: Props) => {
-  const [selectedEntryType, setSelectedEntryType] = useState<string|undefined>("")
+  const [selectedEntryType, setSelectedEntryType] = useState<string|undefined>("");
 
   function getForm(){
     switch (selectedEntryType) {
       case "NewHealthCheckEntry":
-        return <HealthCheckEntryForm onSubmit={onSubmit} onCancel={onClose} />
+        return <HealthCheckEntryForm onSubmit={onSubmit} onCancel={onClose} />;
       case "NewHospitalEntry" :
-        return <HospitalEntryForm onSubmit={onSubmit} onCancel={onClose} />
+        return <HospitalEntryForm onSubmit={onSubmit} onCancel={onClose} />;
       case "NewOccupationalHealthcareEntry":
-        return <OccupationalHealthcareEntryForm onSubmit={onSubmit} onCancel={onClose} />
+        return <OccupationalHealthcareEntryForm onSubmit={onSubmit} onCancel={onClose} />;
       default:
         break;
     }
@@ -42,7 +42,7 @@ const AddEntryModal = ({ modalOpen, onClose, onSubmit, error }: Props) => {
         {selectedEntryType && getForm()}
       </Modal.Content>
     </Modal>
-  )
+  );
 } ;
 
 export default AddEntryModal;

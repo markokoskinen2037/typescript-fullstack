@@ -6,7 +6,7 @@ import { NewHealthCheckEntry } from "../types";
 import { useStateValue } from "../state";
 import { validateRequired, validateDate, validateHealthCheckRating } from "./helpers";
 
-export type EntryFormValues = NewHealthCheckEntry
+export type EntryFormValues = NewHealthCheckEntry;
 
 interface Props {
   onSubmit: (values: EntryFormValues) => void;
@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const HealthCheckEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
-  const [{ diagnoses }] = useStateValue()
+  const [{ diagnoses }] = useStateValue();
 
   return (
     <Formik
