@@ -1,14 +1,14 @@
 import React from "react";
 import axios from "axios";
-import { Header, Icon, SemanticICONS, Segment } from "semantic-ui-react";
+import { Header, Icon, SemanticICONS, Segment, Button } from "semantic-ui-react";
 
-import { Patient, Gender, Entry, assertNever, Diagnosis } from "../types";
+import { Patient, Gender, Entry, assertNever, Diagnosis, NewHealthCheckEntry, NewHospitalEntry, NewOccupationalHealthcareEntry } from "../types";
 import { apiBaseUrl } from "../constants";
-import { useStateValue, updatePatientListAction } from "../state";
+import { useStateValue, updatePatientListAction, updatePatientAction } from "../state";
 import { useParams } from "react-router-dom";
+import AddEntryModal from "../AddEntryModal";
 
 const EntryDetails: React.FC<{entry: Entry; diagnoses: Diagnosis[]}> = ({entry, diagnoses}) => {
-
     
   const getDiagnosisName = (code: string) => {
     const temp = diagnoses.find(d => {
@@ -102,6 +102,16 @@ const SinglePatientPage: React.FC = () => {
 
   const patient = patients[id]; 
 
+  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const [error, setError] = React.useState<string | undefined>();
+
+  const openModal = (): void => setModalOpen(true);
+
+  const closeModal = (): void => {
+    setModalOpen(false);
+    setError(undefined);
+  };
+
   if(!patient) return null;
 
   const getIconName = (): SemanticICONS => {
@@ -119,7 +129,19 @@ const SinglePatientPage: React.FC = () => {
 
   const iconName = getIconName();
 
-
+  const submitNewEntry = async (values: NewHealthCheckEntry|NewHospitalEntry|NewOccupationalHealthcareEntry) => {
+    try {
+      const { data: updatedPatient } = await axios.post<Patient>(
+        `${apiBaseUrl}/patients/${id}/entries`,
+        values
+      );
+      dispatch(updatePatientAction(updatedPatient));
+      closeModal();
+    } catch (e) {
+      console.error(e.response.data);
+      setError(e.response.data.error);
+    }
+  };
 
   return (
     <div className="singlePatient">
@@ -128,6 +150,13 @@ const SinglePatientPage: React.FC = () => {
       <div>occupation: {patient.occupation}</div>
       {!!patient.entries.length && <h2>entries</h2>}
       {patient.entries.map(e => <EntryDetails key={id+e.id} entry={e} diagnoses={diagnoses} />)}
+      <AddEntryModal
+        modalOpen={modalOpen}
+        onSubmit={submitNewEntry}
+        error={error}
+        onClose={closeModal}
+      />
+      <Button onClick={() => openModal()}>Add New Entry</Button>
     </div>
   );
 };

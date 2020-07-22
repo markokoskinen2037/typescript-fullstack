@@ -112,3 +112,44 @@ export const DiagnosisSelection = ({
     </Form.Field>
   );
 };
+
+
+export const EntryTypeSelection = ({
+  diagnoses,
+  setFieldValue,
+  setFieldTouched
+}: {
+  diagnoses: Diagnosis[];
+  setFieldValue: FormikProps<{ diagnosisCodes: string[] }>["setFieldValue"];
+  setFieldTouched: FormikProps<{ diagnosisCodes: string[] }>["setFieldTouched"];
+}) => {
+  const field = "diagnosisCodes";
+  const onChange = (
+    _event: React.SyntheticEvent<HTMLElement, Event>,
+    data: DropdownProps
+  ) => {
+    setFieldTouched(field, true);
+    setFieldValue(field, data.value);
+  };
+
+  const stateOptions = diagnoses.map(diagnosis => ({
+    key: diagnosis.code,
+    text: `${diagnosis.name} (${diagnosis.code})`,
+    value: diagnosis.code
+  }));
+
+  return (
+    <Form.Field>
+      <label>Diagnoses</label>
+      <Dropdown
+        fluid
+        multiple
+        search
+        selection
+        options={stateOptions}
+        onChange={onChange}
+      />
+      <ErrorMessage name={field} />
+    </Form.Field>
+  );
+};

@@ -68,7 +68,7 @@ const parseEntries = (entries:any) => {
 }
 
   /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-const toNewPatientEntry = (object : any): NewPatientEntry => {
+export const toNewPatientEntry = (object : any): NewPatientEntry => {
 
   /* eslint-disable @typescript-eslint/no-unsafe-member-access */
   const newEntry: NewPatientEntry = {
@@ -82,5 +82,3 @@ const toNewPatientEntry = (object : any): NewPatientEntry => {
   
   return newEntry;
 }; 
-
-export default toNewPatientEntry;
